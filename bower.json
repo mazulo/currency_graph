@@ -1,0 +1,14 @@
+{
+  "name": "currency_graph",
+  "authors": [
+    "Patrick Mazulo <mazulo@7ws.co>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "",
+  "homepage": "",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}
