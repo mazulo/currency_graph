@@ -3,13 +3,31 @@
 {% load static %}
 
 {% block content %}
-    <p>Test</p>
 
-    <button class="currency" value="USD" type="submit">Get currency USD</button>
-    <button class="currency" value="EUR" type="submit">Get currency EUR</button>
-    <button class="currency" value="CAD" type="submit">Get currency CAD</button>
+    <div class="ui container">
+        <h1 class="ui header">Currency graphs</h1>
 
-    <div id="container" style="width:100%; height:400px;"></div>
+        <div class="ui center aligned three column padded stackable grid">
+            <div class="column">
+                <button class="ui huge button green currency" value="USD" type="submit">
+                    <i class="dollar icon"></i>
+                    Dollar
+                </button>
+            </div>
+            <div class="column">
+                <button class="ui huge button green currency" value="EUR" type="submit">
+                    <i class="euro icon"></i>
+                    Euro
+                </button>
+            </div>
+        </div>
+
+        <div class="ui segment">
+            <div id="container" style="width:100%; height:400px;"></div>
+        </div>
+
+    </div>
+
 
 {% endblock content %}
 
