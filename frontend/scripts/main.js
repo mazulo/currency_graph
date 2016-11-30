@@ -17,10 +17,11 @@ $(".currency").click(function() {
                     text: 'Currency graph'
                 },
 
+                colors: ['#16ab39', '#434348', '#90ed7d', '#f7a35c', '#8085e9', '#f15c80', '#e4d354', '#2b908f', '#f45b5b', '#91e8e1'],
+
                 subtitle: {
                     text: 'Variation of BRL -> ' + currency_base
                 },
-
 
                 xAxis: {
                     categories: chart_categories
