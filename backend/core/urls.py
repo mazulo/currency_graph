@@ -5,4 +5,5 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^currencies/$', views.CurrencyView.as_view(), name='currency'),
 ]
