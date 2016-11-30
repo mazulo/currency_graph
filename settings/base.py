@@ -67,3 +67,5 @@ TIME_ZONE = config('TIME_ZONE', default='America/Fortaleza')
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
+API_URL = 'http://api.fixer.io/latest?base={base}&symbols=BRL&date={date}'
