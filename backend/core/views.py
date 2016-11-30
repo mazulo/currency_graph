@@ -18,6 +18,9 @@ class CurrencyView(JSONResponseMixin, generic.TemplateView):
     symbol_target = 'BRL'
 
     def create_currencies(self, base, dates, current_date, first_date):
+        """
+        Create multiples currencies based on the range of dates
+        """
         currency_instances = []
 
         for date in dates:
@@ -35,12 +38,19 @@ class CurrencyView(JSONResponseMixin, generic.TemplateView):
         return
 
     def daterange(self, start_date, end_date):
+        """
+        Helper function to create a range of dates
+        """
         for n in range(int((end_date - start_date).days)):
             yield start_date + timezone.timedelta(n)
 
     def get_data(self, context):
+        """
+        Override method to get the data to be returned
+        """
         context = super().get_data(context)
 
+        # Remove the view, added by generic.TemplateView
         context.pop('view')
 
         current_date = timezone.datetime.date(timezone.datetime.now())
@@ -90,6 +100,9 @@ class CurrencyView(JSONResponseMixin, generic.TemplateView):
         return context
 
     def get_json_api_response(self, base, date):
+        """
+        Return the json response from fixer.io
+        """
         return requests.get(
             settings.API_URL.format(base=base, date=date.isoformat())
         ).json()
@@ -101,6 +114,10 @@ class CurrencyView(JSONResponseMixin, generic.TemplateView):
         ).order_by('date')
 
     def render_to_response(self, context, **response_kwargs):
+        """
+        Use the .render_to_response method to return the
+        render_to_json_response from the mixin
+        """
         return self.render_to_json_response(context, **response_kwargs)
 
     def serialize_objects(self, objects):

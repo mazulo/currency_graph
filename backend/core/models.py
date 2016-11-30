@@ -3,6 +3,9 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class CreateUpdateModel(models.Model):
+    """
+    Base model
+    """
 
     created_at = models.DateTimeField(
         'criado em',
@@ -18,6 +21,9 @@ class CreateUpdateModel(models.Model):
 
 
 class Currency(CreateUpdateModel):
+    """
+    Model to save currency from fixer.io
+    """
 
     date = models.DateField(verbose_name=_('currency date'))
     base = models.CharField(
