@@ -28,3 +28,6 @@ gunicorn==19.6.0
 
 # Support static files on Heroku
 whitenoise==3.2.1
+
+# Requests: HTTP for Humans
+requests==2.12.1
