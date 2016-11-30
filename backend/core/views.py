@@ -32,10 +32,11 @@ class CurrencyView(JSONResponseMixin, generic.TemplateView):
             )
         Currency.objects.bulk_create(currency_instances)
 
-        return Currency.objects.filter(
-            base=base,
-            date__range=[first_date, current_date],
-        ).order_by('date')
+        return
+
+    def daterange(self, start_date, end_date):
+        for n in range(int((end_date - start_date).days)):
+            yield start_date + timezone.timedelta(n)
 
     def get_data(self, context):
         context = super().get_data(context)
@@ -50,31 +51,38 @@ class CurrencyView(JSONResponseMixin, generic.TemplateView):
 
         base = self.request.GET.get('base')
 
-        query = Currency.objects.filter(
-            base=base,
-            date__range=[first_date, current_date]
-        )
+        query = self.get_queryset(base, [first_date, current_date])
 
         if query.exists():
 
-            if query.count() < 7:
-                json_response = self.get_json_api_response(base, current_date)
-                Currency.objects.create(
-                    date=current_date,
-                    base=base,
-                    symbol_target=self.symbol_target,
-                    value=json_response['rates']['BRL']
+            query_count = query.count()
+
+            if query_count < 7:
+                start_date = query.first().date
+                new_dates = [
+                    date for date in self.daterange(start_date, current_date)
+                ]
+
+                self.create_currencies(
+                    base,
+                    new_dates,
+                    current_date,
+                    start_date
                 )
 
-            query = query.order_by('date')
+            query = self.get_queryset(base, [first_date, current_date])
             context['currencies'] = self.serialize_objects(query)
             # context['currencies'] = query
         else:
-            currency_queryset = self.create_currencies(
+            self.create_currencies(
                 base,
                 dates,
                 current_date,
                 first_date,
+            )
+            currency_queryset = self.get_queryset(
+                base,
+                [first_date, current_date]
             )
             context['currencies'] = self.serialize_objects(currency_queryset)
             # context['currencies'] = currency_queryset
@@ -85,6 +93,12 @@ class CurrencyView(JSONResponseMixin, generic.TemplateView):
         return requests.get(
             settings.API_URL.format(base=base, date=date.isoformat())
         ).json()
+
+    def get_queryset(self, base, range_dates):
+        return Currency.objects.filter(
+            base=base,
+            date__range=range_dates
+        ).order_by('date')
 
     def render_to_response(self, context, **response_kwargs):
         return self.render_to_json_response(context, **response_kwargs)
