@@ -8,13 +8,10 @@
 	{% block extra_css %}{% endblock extra_css %}
 	{% compress css %}
 		<link rel="stylesheet" type="text/x-scss" href="{% static 'styles/main.scss' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'semantic/dist/semantic.min.css' %}">
 	{% endcompress %}
 </head>
 <body>
-
-	<header class="main-header">
-		<h1>Currency graphs</h1>
-	</header>
 
 	{% block content %}{% endblock content %}
 
