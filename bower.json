@@ -9,6 +9,8 @@
   "homepage": "",
   "private": true,
   "dependencies": {
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "highcharts": "5.0.5",
+    "semantic": "2.2.6"
   }
 }
